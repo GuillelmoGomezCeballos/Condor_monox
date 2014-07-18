@@ -1,0 +1,4 @@
+/afs/cern.ch/work/c/ceballos/mva/samples/ttbar
+/afs/cern.ch/work/c/ceballos/mva/samples/zll
+/afs/cern.ch/work/c/ceballos/mva/samples/wjets
+/afs/cern.ch/work/c/ceballos/mva/samples/data
