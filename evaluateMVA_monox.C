@@ -46,7 +46,7 @@ using namespace TMVA;
 
 void evaluateMVA_monox(
 TString inputFile    = "/afs/cern.ch/work/c/ceballos/mva/samples/ttbar.root", 
-TString myMethodList = "LikelihoodD",
+TString myMethodList = "BDTG,MLP,LikelihoodD",
 TString myVarList    = "QGtag,tau1,tau2,tau2tau1,jetC2b0,jetC2b0p2,jetC2b0p5,jetC2b1,jetC2b2,jetQJetVol,jetMassSDb0,jetMassSDb2,jetMassSDbm1,jetMassPruned,jetMassFiltered,jetMassTrimmed,jetMassRaw,jetPull,jetPullAngle,jetQGtagSub1,jetQGtagSub2,jetQGtagComb",
 TString outTag       = "default",
 TString pathWeights  = "weights/",
@@ -90,6 +90,7 @@ Int_t   count        = 0
   mvaVar["jetQGtagSub1"]    = 1;
   mvaVar["jetQGtagSub2"]    = 1;
   mvaVar["jetQGtagComb"]    = 1;
+  mvaVar["frozen"]          = 1;
 
   //---------------------------------------------------------------
   // specifies the selection applied to events in the training
@@ -248,6 +249,7 @@ Int_t   count        = 0
     Float_t jetQGtagSub1;
     Float_t jetQGtagSub2;
     Float_t jetQGtagComb;
+    Float_t frozen;
 
     if (mvaVar["QGtag"])	   reader->AddVariable( "QGtag",	   &QGtag	   );
     if (mvaVar["tau1"])            reader->AddVariable( "tau1",            &tau1           );
@@ -271,6 +273,7 @@ Int_t   count        = 0
     if (mvaVar["jetQGtagSub1"])    reader->AddVariable( "jetQGtagSub1",    &jetQGtagSub1   );
     if (mvaVar["jetQGtagSub2"])    reader->AddVariable( "jetQGtagSub2",    &jetQGtagSub2   );
     if (mvaVar["jetQGtagComb"])    reader->AddVariable( "jetQGtagComb",    &jetQGtagComb   );
+    if (mvaVar["frozen"])          reader->AddVariable( "frozen",          &frozen         );
 
     // Spectator variables declared in the training have to be added to the reader, too
     //    Float_t spec1,spec2;
@@ -320,7 +323,12 @@ Int_t   count        = 0
     out->cd();
     //TTree *clone = signal.tree_->CloneTree(0);
     TTree *clone = new TTree("exampleEventsNtuple","exampleEventsNtuple");
- 
+
+   if(Use["BDT"] && Use["BDTG"]) {
+     printf("BDT and BDTG on, exit\n");
+     assert(0);
+   }
+
     Float_t bdt;
     Float_t ann;
     Float_t lik;
@@ -333,9 +341,9 @@ Int_t   count        = 0
     //if(clone->GetBranchStatus(Form("ann_monox_%s" ,suffix.Data())) != 0) clone->SetBranchStatus(Form("ann_monox_%s" ,suffix.Data()),0);
     //if(clone->GetBranchStatus(Form("lik_monox_%s" ,suffix.Data())) != 0) clone->SetBranchStatus(Form("lik_monox_%s" ,suffix.Data()),0);
 
-    if(Use["BDTG"])         clone->Branch(Form("bdt_monox_%s" ,suffix.Data()) , &bdt  , Form("bdt_monox_%s/F"  ,suffix.Data()) );
-    if(Use["MLP"])          clone->Branch(Form("ann_monox_%s" ,suffix.Data()) , &ann  , Form("ann_monox_%s/F"  ,suffix.Data()) );
-    if(Use["LikelihoodD"])  clone->Branch(Form("lik_monox_%s" ,suffix.Data()) , &lik  , Form("lik_monox_%s/F"  ,suffix.Data()) );
+    if(Use["BDT"]||Use["BDTG"]) clone->Branch(Form("bdt_monox_%s" ,suffix.Data()) , &bdt  , Form("bdt_monox_%s/F"  ,suffix.Data()) );
+    if(Use["MLP"])              clone->Branch(Form("ann_monox_%s" ,suffix.Data()) , &ann  , Form("ann_monox_%s/F"  ,suffix.Data()) );
+    if(Use["LikelihoodD"])      clone->Branch(Form("lik_monox_%s" ,suffix.Data()) , &lik  , Form("lik_monox_%s/F"  ,suffix.Data()) );
 
     //if(Use["BDTG"])         br_bdt -> SetTitle(Form("BDTG        Output monox %s" , suffix.Data()));
     //if(Use["MLP"])          br_ann -> SetTitle(Form("MLP         Output monox %s" , suffix.Data()));
@@ -427,11 +435,14 @@ Int_t   count        = 0
 	  }
         }
       }
-      
+      frozen = gRandom->Uniform(0.000,0.001);
       npass++;
       
       if (Use["BDTG"]){
         bdt  = reader->EvaluateMVA( "BDTG method" );
+      }
+      if (Use["BDT"]){
+        bdt  = reader->EvaluateMVA( "BDT method" );
       }
       if (Use["MLP"]){
         ann  = reader->EvaluateMVA( "MLP method" );

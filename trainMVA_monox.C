@@ -122,6 +122,7 @@ void trainMVA_monox(
   mvaVar["jetQGtagSub1"]    = 1;
   mvaVar["jetQGtagSub2"]    = 1;
   mvaVar["jetQGtagComb"]    = 1;
+  mvaVar["frozen"]          = 1;
 
   TCut sel = "";
 
@@ -289,6 +290,7 @@ void trainMVA_monox(
   if (mvaVar["jetQGtagSub1"])	factory->AddVariable( "jetQGtagSub1",	 "jetQGtagSub1",     "", 'F' );
   if (mvaVar["jetQGtagSub2"])	factory->AddVariable( "jetQGtagSub2",	 "jetQGtagSub2",     "", 'F' );
   if (mvaVar["jetQGtagComb"])	factory->AddVariable( "jetQGtagComb",	 "jetQGtagComb",     "", 'F' );
+  if (mvaVar["frozen"])	        factory->AddVariable( "frozen",	         "frozen",           "", 'F' );
 
   int nVariablesTemp = 0;
 
@@ -314,6 +316,7 @@ void trainMVA_monox(
   if (mvaVar["jetQGtagSub1"])	  { cout << "Adding variable to MVA training: jetQGtagSub1"    << endl; nVariablesTemp++; }
   if (mvaVar["jetQGtagSub2"])	  { cout << "Adding variable to MVA training: jetQGtagSub2"    << endl; nVariablesTemp++; }
   if (mvaVar["jetQGtagComb"])	  { cout << "Adding variable to MVA training: jetQGtagComb"    << endl; nVariablesTemp++; }
+  if (mvaVar["frozen"])	          { cout << "Adding variable to MVA training: frozen"          << endl; nVariablesTemp++; }
 
   const unsigned int nVariables = nVariablesTemp;
   cout << "Using " << nVariables << " variables for MVA training" << endl;
@@ -482,6 +485,7 @@ void trainMVA_monox(
     if (mvaVar["jetQGtagSub1"])    vars[varCounter++] = fjetQGtagSub1;
     if (mvaVar["jetQGtagSub2"])    vars[varCounter++] = fjetQGtagSub2;
     if (mvaVar["jetQGtagComb"])    vars[varCounter++] = fjetQGtagComb;
+    if (mvaVar["frozen"])          vars[varCounter++] = gRandom->Uniform(0.000,0.001);
 
     if ( gRandom->Uniform(0,1) < 0.5 ){
       factory->AddSignalTrainingEvent( vars, 1 ); nsigtrain++;
@@ -616,6 +620,7 @@ void trainMVA_monox(
     if (mvaVar["jetQGtagSub1"])    vars[varCounter++] = fjetQGtagSub1;
     if (mvaVar["jetQGtagSub2"])    vars[varCounter++] = fjetQGtagSub2;
     if (mvaVar["jetQGtagComb"])    vars[varCounter++] = fjetQGtagComb;
+    if (mvaVar["frozen"])          vars[varCounter++] = gRandom->Uniform(0.000,0.001);
 
     if ( gRandom->Uniform(0,1) < 0.5 ){
       factory->AddBackgroundTrainingEvent( vars, 1 ); nbkgtrain++;
@@ -818,15 +823,15 @@ void trainMVA_monox(
 
   if (Use["BDT"])  // Adaptive Boost
     factory->BookMethod(TMVA::Types::kBDT,"BDT",
-			 "!H:!V:NTrees=500:BoostType=Grad:Shrinkage=0.10:UseBaggedGrad:GradBaggingFraction=0.5:nCuts=2000:NNodesMax=5:VarTransform=Decorrelate");
+			 "!H:!V:NTrees=2000:BoostType=Grad:Shrinkage=0.10:UseBaggedGrad:GradBaggingFraction=0.5:nCuts=2000:NNodesMax=5:VarTransform=Decorrelate:NegWeightTreatment=IgnoreNegWeights");
 
   if (Use["BDTB"]) // Bagging
     factory->BookMethod( TMVA::Types::kBDT, "BDTB",
-                         "!H:!V:NTrees=500:BoostType=Bagging:SeparationType=GiniIndex:nCuts=2000:PruneMethod=NoPruning" );
+                         "!H:!V:NTrees=2000:BoostType=Bagging:SeparationType=GiniIndex:nCuts=2000:NNodesMax=100000:PruneMethod=NoPruning:NegWeightTreatment=IgnoreNegWeights" );
 
   if (Use["BDTD"]) // Decorrelation + Adaptive Boost
     factory->BookMethod(TMVA::Types::kBDT,"BDTD",
-                    "!H:!V:NTrees=500:BoostType=AdaBoost:SeparationType=GiniIndex:nCuts=2000:PruneMethod=CostComplexity:PruneStrength=25.0:VarTransform=Decorrelate");
+                    "!H:!V:NTrees=2000:BoostType=AdaBoost:SeparationType=GiniIndex:nCuts=2000:NNodesMax=100000:PruneMethod=CostComplexity:PruneStrength=25.0:VarTransform=Decorrelate:NegWeightTreatment=IgnoreNegWeights");
 
   // RuleFit -- TMVA implementation of Friedman's method
   if (Use["RuleFit"])
