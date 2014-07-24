@@ -392,11 +392,6 @@ Int_t   count        = 0
       jetQGtagSub1    = signal.fjet1QGtagSub1_;
       jetQGtagSub2    = signal.fjet1QGtagSub2_;
       jetQGtagComb    = 2.*signal.fjet1QGtagSub2_+signal.fjet1QGtagSub1_;
-      if(signal.fjet1QGPtDSub2_ > signal.fjet1QGPtDSub1_){
-        jetQGtagSub1  = signal.fjet1QGtagSub2_;
-        jetQGtagSub2  = signal.fjet1QGtagSub1_;
-        jetQGtagComb  = 2.*signal.fjet1QGtagSub1_+signal.fjet1QGtagSub2_;
-      }
 
       if (nsel == 0) { // top selection
 
@@ -428,11 +423,6 @@ Int_t   count        = 0
 	  jetQGtagSub1    = signal.fjet2QGtagSub1_;
 	  jetQGtagSub2    = signal.fjet2QGtagSub2_;
 	  jetQGtagComb    = 2.*signal.fjet2QGtagSub2_+signal.fjet2QGtagSub1_;
-	  if(signal.fjet2QGPtDSub2_ > signal.fjet2QGPtDSub1_){
-	    jetQGtagSub1  = signal.fjet2QGtagSub2_;
-	    jetQGtagSub2  = signal.fjet2QGtagSub1_;
-	    jetQGtagComb  = 2.*signal.fjet2QGtagSub1_+signal.fjet2QGtagSub2_;
-	  }
         }
       }
       frozen = gRandom->Uniform(0.000,0.001);

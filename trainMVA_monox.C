@@ -385,11 +385,6 @@ void trainMVA_monox(
     Double_t fjetQGtagSub1    = signal.fjet1QGtagSub1_;
     Double_t fjetQGtagSub2    = signal.fjet1QGtagSub2_;
     Double_t fjetQGtagComb    = 2.*signal.fjet1QGtagSub2_+signal.fjet1QGtagSub1_;
-    if(signal.fjet1QGPtDSub2_ > signal.fjet1QGPtDSub1_){
-      fjetQGtagSub1 = signal.fjet1QGtagSub2_;
-      fjetQGtagSub2 = signal.fjet1QGtagSub1_;
-      fjetQGtagComb = 2.*signal.fjet1QGtagSub1_+signal.fjet1QGtagSub2_;
-    }
 
     Bool_t preselCuts = (signal.preselWord_ & (1<<0)) && (signal.trigger_ & (1<<2)) && (signal.HLTmatch_ & (1<<1));
     Bool_t leptonCuts = signal.lep1_.Pt() > 30 && abs(signal.lep1_.Eta()) < 2.1 && abs(signal.lid1_) == 13 && signal.nlep_ == 1;
@@ -428,11 +423,6 @@ void trainMVA_monox(
         fjetQGtagSub1    = signal.fjet2QGtagSub1_;
         fjetQGtagSub2    = signal.fjet2QGtagSub2_;
         fjetQGtagComb    = 2.*signal.fjet2QGtagSub2_+signal.fjet2QGtagSub1_;
-        if(signal.fjet2QGPtDSub2_ > signal.fjet2QGPtDSub1_){
-          fjetQGtagSub1 = signal.fjet2QGtagSub2_;
-          fjetQGtagSub2 = signal.fjet2QGtagSub1_;
-          fjetQGtagComb = 2.*signal.fjet2QGtagSub1_+signal.fjet2QGtagSub2_;
-        }
       }
     }
     else if(nselS == 1) { // Wjets selection
@@ -520,11 +510,6 @@ void trainMVA_monox(
     Double_t fjetQGtagSub1    = background.fjet1QGtagSub1_;
     Double_t fjetQGtagSub2    = background.fjet1QGtagSub2_;
     Double_t fjetQGtagComb    = 2.*background.fjet1QGtagSub2_+background.fjet1QGtagSub1_;
-    if(background.fjet1QGPtDSub2_ > background.fjet1QGPtDSub1_){
-      fjetQGtagSub1 = background.fjet1QGtagSub2_;
-      fjetQGtagSub2 = background.fjet1QGtagSub1_;
-      fjetQGtagComb = 2.*background.fjet1QGtagSub1_+background.fjet1QGtagSub2_;
-    }
 
     Bool_t preselCuts = (background.preselWord_ & (1<<0)) && (background.trigger_ & (1<<2)) && (background.HLTmatch_ & (1<<1));
     Bool_t leptonCuts = background.lep1_.Pt() > 30 && abs(background.lep1_.Eta()) < 2.1 && abs(background.lid1_) == 13 && background.nlep_ == 1;
@@ -563,11 +548,6 @@ void trainMVA_monox(
 	fjetQGtagSub1	 = background.fjet2QGtagSub1_;
 	fjetQGtagSub2	 = background.fjet2QGtagSub2_;
 	fjetQGtagComb	 = 2.*background.fjet2QGtagSub2_+background.fjet2QGtagSub1_;
-        if(background.fjet2QGPtDSub2_ > background.fjet2QGPtDSub1_){
-          fjetQGtagSub1 = background.fjet2QGtagSub2_;
-          fjetQGtagSub2 = background.fjet2QGtagSub1_;
-	  fjetQGtagComb = 2.*background.fjet2QGtagSub1_+background.fjet2QGtagSub2_;
-        }
       }
     }
     else if(nselB == 1) { // Wjets selection
