@@ -448,7 +448,7 @@ void trainMVA_monox(
     }
 
     if(!(preselCuts&&leptonCuts&&jetCuts)) continue;
-    if(fJET.M() >= 200) continue;
+    if(fJET.M() >= 140) continue;
     if(fjetPartonId != 24) continue;
 
     int varCounter = 0;
@@ -573,7 +573,7 @@ void trainMVA_monox(
     }
 
     if(!(preselCuts&&leptonCuts&&jetCuts)) continue;
-    if(fJET.M() >= 200) continue;
+    if(fJET.M() >= 140) continue;
     if(fjetPartonId == 24) continue;
 
     int varCounter = 0;
