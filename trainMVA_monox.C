@@ -450,6 +450,7 @@ void trainMVA_monox(
     if(!(preselCuts&&leptonCuts&&jetCuts)) continue;
     if(fJET.M() >= 140) continue;
     if(fjetPartonId != 24) continue;
+    //if(fjetMassTrimmed <= 30) continue;
 
     int varCounter = 0;
     
@@ -575,6 +576,7 @@ void trainMVA_monox(
     if(!(preselCuts&&leptonCuts&&jetCuts)) continue;
     if(fJET.M() >= 140) continue;
     if(fjetPartonId == 24) continue;
+    //if(fjetMassTrimmed <= 30) continue;
 
     int varCounter = 0;
 
@@ -799,7 +801,7 @@ void trainMVA_monox(
   // Boosted Decision Trees
   if (Use["BDTG"]) // Gradient Boost
     factory->BookMethod( TMVA::Types::kBDT, "BDTG",
-                         "!H:!V:NTrees=2000::BoostType=Grad:Shrinkage=0.1:UseBaggedGrad=F:nCuts=2000:MaxDepth=3:NNodesMax=100000:UseYesNoLeaf=F:nEventsMin=1000:NegWeightTreatment=IgnoreNegWeights" );
+                         "!H:!V:NTrees=200::BoostType=Grad:Shrinkage=0.1:UseBaggedGrad=F:nCuts=2000:NNodesMax=10000:MaxDepth=5:UseYesNoLeaf=F:nEventsMin=200:NegWeightTreatment=IgnoreNegWeights" );
 
   if (Use["BDT"])  // Adaptive Boost
     factory->BookMethod(TMVA::Types::kBDT,"BDT",
