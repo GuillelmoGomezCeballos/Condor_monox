@@ -2,3 +2,5 @@
 /afs/cern.ch/work/c/ceballos/mva/samples/zll
 /afs/cern.ch/work/c/ceballos/mva/samples/wjets
 /afs/cern.ch/work/c/ceballos/mva/samples/data
+/afs/cern.ch/work/c/ceballos/mva/samples/ttlj
+/afs/cern.ch/work/c/ceballos/mva/samples/ttll
