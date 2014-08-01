@@ -1,6 +1,12 @@
 /afs/cern.ch/work/c/ceballos/mva/samples/ttbar
 /afs/cern.ch/work/c/ceballos/mva/samples/zll
-/afs/cern.ch/work/c/ceballos/mva/samples/wjets
+/afs/cern.ch/work/c/ceballos/mva/samples/w1jets
+/afs/cern.ch/work/c/ceballos/mva/samples/w2jets
+/afs/cern.ch/work/c/ceballos/mva/samples/w3jets
+/afs/cern.ch/work/c/ceballos/mva/samples/w4jets
+/afs/cern.ch/work/c/ceballos/mva/samples/ww
+/afs/cern.ch/work/c/ceballos/mva/samples/wz
+/afs/cern.ch/work/c/ceballos/mva/samples/zz
 /afs/cern.ch/work/c/ceballos/mva/samples/data
 /afs/cern.ch/work/c/ceballos/mva/samples/ttlj
 /afs/cern.ch/work/c/ceballos/mva/samples/ttll
