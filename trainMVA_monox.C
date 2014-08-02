@@ -67,7 +67,7 @@ void trainMVA_monox(
  TString bgdInputFile    = "/afs/cern.ch/work/c/ceballos/mva/samples/zll.root",
  TString outTag          = "default",
  TString myMethodList    = "BDTG,MLP,LikelihoodD",
- TString myVarList       = "QGtag,tau1,tau2,tau2tau1,jetC2b0,jetC2b0p2,jetC2b0p5,jetC2b1,jetC2b2,jetQJetVol,jetMassSDb0,jetMassSDb2,jetMassSDbm1,jetMassPruned,jetMassFiltered,jetMassTrimmed,jetMassRaw,jetPull,jetPullAngle,jetQGtagSub1,jetQGtagSub2,jetQGtagComb"
+ TString myVarList       = "QGtag,tau1,tau2,tau2tau1,jetC2b0,jetC2b0p2,jetC2b0p5,jetC2b1,jetC2b2,jetQJetVol,jetMassSDb0,jetMassSDb1,jetMassSDb2,jetMassSDbm1,jetMassPruned,jetMassFiltered,jetMassTrimmed,jetMassRaw,jetPull,jetPullAngle,jetQGtagSub1,jetQGtagSub2,jetQGtagComb"
  )
 {
   // The explicit loading of the shared libTMVA is done in TMVAlogon.C, defined in .rootrc
@@ -111,6 +111,7 @@ void trainMVA_monox(
   mvaVar["jetC2b2"]	    = 1;
   mvaVar["jetQJetVol"]      = 1;
   mvaVar["jetMassSDb0"]     = 1;
+  mvaVar["jetMassSDb1"]     = 1;
   mvaVar["jetMassSDb2"]     = 1;
   mvaVar["jetMassSDbm1"]    = 1;
   mvaVar["jetMassPruned"]   = 1;
@@ -279,6 +280,7 @@ void trainMVA_monox(
   if (mvaVar["jetC2b2"])	factory->AddVariable( "jetC2b2",         "jetC2b2",	     "", 'F' );
   if (mvaVar["jetQJetVol"])	factory->AddVariable( "jetQJetVol",      "jetQJetVol",       "", 'F' );
   if (mvaVar["jetMassSDb0"])	factory->AddVariable( "jetMassSDb0",     "jetMassSDb0",      "", 'F' );
+  if (mvaVar["jetMassSDb1"])	factory->AddVariable( "jetMassSDb1",     "jetMassSDb1",      "", 'F' );
   if (mvaVar["jetMassSDb2"])	factory->AddVariable( "jetMassSDb2",     "jetMassSDb2",      "", 'F' );
   if (mvaVar["jetMassSDbm1"])	factory->AddVariable( "jetMassSDbm1",    "jetMassSDbm1",     "", 'F' );
   if (mvaVar["jetMassPruned"])  factory->AddVariable( "jetMassPruned",   "jetMassPruned",    "", 'F' );
@@ -305,6 +307,7 @@ void trainMVA_monox(
   if (mvaVar["jetC2b2"])	  { cout << "Adding variable to MVA training: jetC2b2"         << endl; nVariablesTemp++; }
   if (mvaVar["jetQJetVol"])	  { cout << "Adding variable to MVA training: jetQJetVol"      << endl; nVariablesTemp++; }
   if (mvaVar["jetMassSDb0"])	  { cout << "Adding variable to MVA training: jetMassSDb0"     << endl; nVariablesTemp++; }
+  if (mvaVar["jetMassSDb1"])	  { cout << "Adding variable to MVA training: jetMassSDb1"     << endl; nVariablesTemp++; }
   if (mvaVar["jetMassSDb2"])	  { cout << "Adding variable to MVA training: jetMassSDb2"     << endl; nVariablesTemp++; }
   if (mvaVar["jetMassSDbm1"])	  { cout << "Adding variable to MVA training: jetMassSDbm1"    << endl; nVariablesTemp++; }
   if (mvaVar["jetMassPruned"])    { cout << "Adding variable to MVA training: jetMassPruned"   << endl; nVariablesTemp++; }
@@ -375,6 +378,7 @@ void trainMVA_monox(
     Double_t fjetC2b2	      = signal.fjet1C2b2_;
     Double_t fjetQJetVol      = signal.fjet1QJetVol_;
     Double_t fjetMassSDb0     = signal.fjet1MassSDb0_;
+    Double_t fjetMassSDb1     = signal.fjet1MassSDb1_;
     Double_t fjetMassSDb2     = signal.fjet1MassSDb2_;
     Double_t fjetMassSDbm1    = signal.fjet1MassSDbm1_;	
     Double_t fjetMassPruned   = signal.fjet1MassPruned_;
@@ -413,6 +417,7 @@ void trainMVA_monox(
         fjetC2b2	 = signal.fjet2C2b2_;
         fjetQJetVol	 = signal.fjet2QJetVol_;
         fjetMassSDb0	 = signal.fjet2MassSDb0_;
+        fjetMassSDb1	 = signal.fjet2MassSDb1_;
         fjetMassSDb2	 = signal.fjet2MassSDb2_;
         fjetMassSDbm1	 = signal.fjet2MassSDbm1_;
         fjetMassPruned   = signal.fjet2MassPruned_;
@@ -465,6 +470,7 @@ void trainMVA_monox(
     if (mvaVar["jetC2b2"])	   vars[varCounter++] = fjetC2b2;
     if (mvaVar["jetQJetVol"])	   vars[varCounter++] = fjetQJetVol;
     if (mvaVar["jetMassSDb0"])	   vars[varCounter++] = fjetMassSDb0;
+    if (mvaVar["jetMassSDb1"])	   vars[varCounter++] = fjetMassSDb1;
     if (mvaVar["jetMassSDb2"])	   vars[varCounter++] = fjetMassSDb2;
     if (mvaVar["jetMassSDbm1"])	   vars[varCounter++] = fjetMassSDbm1;
     if (mvaVar["jetMassPruned"])   vars[varCounter++] = fjetMassPruned;
@@ -501,6 +507,7 @@ void trainMVA_monox(
     Double_t fjetC2b2	      = background.fjet1C2b2_;
     Double_t fjetQJetVol      = background.fjet1QJetVol_;
     Double_t fjetMassSDb0     = background.fjet1MassSDb0_;
+    Double_t fjetMassSDb1     = background.fjet1MassSDb1_;
     Double_t fjetMassSDb2     = background.fjet1MassSDb2_;
     Double_t fjetMassSDbm1    = background.fjet1MassSDbm1_;	
     Double_t fjetMassPruned   = background.fjet1MassPruned_;
@@ -539,6 +546,7 @@ void trainMVA_monox(
         fjetC2b2	 = background.fjet2C2b2_;
         fjetQJetVol	 = background.fjet2QJetVol_;
         fjetMassSDb0	 = background.fjet2MassSDb0_;
+        fjetMassSDb1	 = background.fjet2MassSDb1_;
         fjetMassSDb2	 = background.fjet2MassSDb2_;
         fjetMassSDbm1	 = background.fjet2MassSDbm1_;
         fjetMassPruned   = background.fjet2MassPruned_;
@@ -591,6 +599,7 @@ void trainMVA_monox(
     if (mvaVar["jetC2b2"])	   vars[varCounter++] = fjetC2b2;
     if (mvaVar["jetQJetVol"])	   vars[varCounter++] = fjetQJetVol;
     if (mvaVar["jetMassSDb0"])	   vars[varCounter++] = fjetMassSDb0;
+    if (mvaVar["jetMassSDb1"])	   vars[varCounter++] = fjetMassSDb1;
     if (mvaVar["jetMassSDb2"])	   vars[varCounter++] = fjetMassSDb2;
     if (mvaVar["jetMassSDbm1"])	   vars[varCounter++] = fjetMassSDbm1;
     if (mvaVar["jetMassPruned"])   vars[varCounter++] = fjetMassPruned;

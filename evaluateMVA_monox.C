@@ -47,7 +47,7 @@ using namespace TMVA;
 void evaluateMVA_monox(
 TString inputFile    = "/afs/cern.ch/work/c/ceballos/mva/samples/ttbar.root", 
 TString myMethodList = "BDTG,MLP,LikelihoodD",
-TString myVarList    = "QGtag,tau1,tau2,tau2tau1,jetC2b0,jetC2b0p2,jetC2b0p5,jetC2b1,jetC2b2,jetQJetVol,jetMassSDb0,jetMassSDb2,jetMassSDbm1,jetMassPruned,jetMassFiltered,jetMassTrimmed,jetMassRaw,jetPull,jetPullAngle,jetQGtagSub1,jetQGtagSub2,jetQGtagComb",
+TString myVarList    = "QGtag,tau1,tau2,tau2tau1,jetC2b0,jetC2b0p2,jetC2b0p5,jetC2b1,jetC2b2,jetQJetVol,jetMassSDb0,jetMassSDb1,jetMassSDb2,jetMassSDbm1,jetMassPruned,jetMassFiltered,jetMassTrimmed,jetMassRaw,jetPull,jetPullAngle,jetQGtagSub1,jetQGtagSub2,jetQGtagComb",
 TString outTag       = "default",
 TString pathWeights  = "weights/",
 TString suffix       = "ww",
@@ -79,6 +79,7 @@ Int_t   count        = 0
   mvaVar["jetC2b2"]	    = 1;
   mvaVar["jetQJetVol"]      = 1;
   mvaVar["jetMassSDb0"]     = 1;
+  mvaVar["jetMassSDb1"]     = 1;
   mvaVar["jetMassSDb2"]     = 1;
   mvaVar["jetMassSDbm1"]    = 1;
   mvaVar["jetMassPruned"]   = 1;
@@ -238,6 +239,7 @@ Int_t   count        = 0
     Float_t jetC2b2;
     Float_t jetQJetVol;
     Float_t jetMassSDb0;
+    Float_t jetMassSDb1;
     Float_t jetMassSDb2;
     Float_t jetMassSDbm1;
     Float_t jetMassPruned;  
@@ -262,6 +264,7 @@ Int_t   count        = 0
     if (mvaVar["jetC2b2"])	   reader->AddVariable( "jetC2b2",	   &jetC2b2	   );
     if (mvaVar["jetQJetVol"])	   reader->AddVariable( "jetQJetVol",	   &jetQJetVol     );
     if (mvaVar["jetMassSDb0"])     reader->AddVariable( "jetMassSDb0",     &jetMassSDb0    );
+    if (mvaVar["jetMassSDb1"])     reader->AddVariable( "jetMassSDb1",     &jetMassSDb1    );
     if (mvaVar["jetMassSDb2"])     reader->AddVariable( "jetMassSDb2",     &jetMassSDb2    );
     if (mvaVar["jetMassSDbm1"])    reader->AddVariable( "jetMassSDbm1",    &jetMassSDbm1   );
     if (mvaVar["jetMassPruned"])   reader->AddVariable( "jetMassPruned",   &jetMassPruned  );
@@ -381,6 +384,7 @@ Int_t   count        = 0
       jetC2b2	      = signal.fjet1C2b2_;
       jetQJetVol      = signal.fjet1QJetVol_;
       jetMassSDb0     = signal.fjet1MassSDb0_;
+      jetMassSDb1     = signal.fjet1MassSDb1_;
       jetMassSDb2     = signal.fjet1MassSDb2_;
       jetMassSDbm1    = signal.fjet1MassSDbm1_; 
       jetMassPruned   = signal.fjet1MassPruned_;
@@ -412,6 +416,7 @@ Int_t   count        = 0
 	  jetC2b2	  = signal.fjet2C2b2_;
 	  jetQJetVol      = signal.fjet2QJetVol_;
 	  jetMassSDb0     = signal.fjet2MassSDb0_;
+	  jetMassSDb1     = signal.fjet2MassSDb1_;
 	  jetMassSDb2     = signal.fjet2MassSDb2_;
 	  jetMassSDbm1    = signal.fjet2MassSDbm1_; 
 	  jetMassPruned   = signal.fjet2MassPruned_;
