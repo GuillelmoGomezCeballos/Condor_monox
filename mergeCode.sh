@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source $HOME/EVAL_SH65 5_3_14;
 export workDir=$HOME/Condor_monox;
 cd $workDir;
 
