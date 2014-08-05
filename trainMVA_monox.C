@@ -484,7 +484,7 @@ void trainMVA_monox(
     if (mvaVar["jetQGtagComb"])    vars[varCounter++] = fjetQGtagComb;
     if (mvaVar["frozen"])          vars[varCounter++] = gRandom->Uniform(0.000,0.001);
 
-    if ( gRandom->Uniform(0,1) < 0.5 ){
+    if ( signal.event_%2 == 0 ){
       factory->AddSignalTrainingEvent( vars, 1 ); nsigtrain++;
     }
     else{
@@ -613,7 +613,7 @@ void trainMVA_monox(
     if (mvaVar["jetQGtagComb"])    vars[varCounter++] = fjetQGtagComb;
     if (mvaVar["frozen"])          vars[varCounter++] = gRandom->Uniform(0.000,0.001);
 
-    if ( gRandom->Uniform(0,1) < 0.5 ){
+    if ( background.event_%2 == 0 ){
       factory->AddBackgroundTrainingEvent( vars, 1 ); nbkgtrain++;
     }
     else{
