@@ -1,2 +1,3 @@
 QGtag,tau1,tau2,tau2tau1,jetC2b0,jetC2b0p2,jetC2b0p5,jetC2b1,jetC2b2,jetQJetVol,jetMassSDb0,jetMassSDb1,jetMassSDb2,jetMassSDbm1,jetMassPruned,jetMassFiltered,jetMassTrimmed,jetMassRaw,jetPull,jetPullAngle,jetQGtagSub1,jetQGtagSub2,jetQGtagComb
 jetMassSDbm1,jetMassTrimmed,jetQGtagComb
+tau2tau1,jetMassTrimmed,jetQGtagComb
